@@ -1,0 +1,3 @@
+import {chromium} from '@playwright/test';
+import fs from 'node:fs';
+const b=await chromium.launch({channel:'chrome',headless:true});const c=await b.newContext(),p=await c.newPage();const issues=[],resources=[];p.on('response',r=>{if(r.status()>=400)issues.push(r.url()+':'+r.status());if(r.url().includes('/assets/'))resources.push({url:r.url(),status:r.status()})});p.on('pageerror',e=>issues.push(e.message));const response=await p.goto('https://mengpingchen954-ops.github.io/plush-little-shop/');await p.waitForFunction(()=>window.plushShop);console.log(JSON.stringify({status:response.status(),cookies:await c.cookies(),resources,issues}));fs.writeFileSync('artifacts/public-assets.json',JSON.stringify({status:response.status(),resources,issues},null,2));await b.close();

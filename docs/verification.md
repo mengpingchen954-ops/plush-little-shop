@@ -19,3 +19,13 @@
 - 首版仅两份制作与一份修复委托，自由制作可继续；没有复杂经营、清洗、任意破洞或换肢。
 
 本地原始 JSON、截图及照片在 artifacts/，均由 .gitignore 排除，不上传玩家存档与测试产物。
+
+## 公开发布验收
+
+- 网页：https://mengpingchen954-ops.github.io/plush-little-shop/
+- 源码：https://github.com/mengpingchen954-ops/plush-little-shop
+- GitHub Actions Pages 部署成功；独立仓库，不涉及其他工作区内容。
+- 匿名 Chrome 实际重跑 132 项完整流程检查，错误 0；三种完整成品、两份制作和一份修复全部完成。
+- 公共 HTML、CSS 和 JavaScript 均返回 200，资产均位于仓库子路径。无登录 Cookie。
+- 额外验证成品正/侧/背面、按压模型形变与回弹、1024px 视口。
+- 源码排除了 artifacts/、node_modules/、dist/、本地存档与凭据；运行时无外部资产请求。

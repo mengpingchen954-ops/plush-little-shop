@@ -100,7 +100,8 @@ export function validateSave(input){
   for(const [id] of PARTS){const p=w.parts?.[id],seam=w.seams?.[id];if(!p||!FABRICS[p.fabric]||!COLORS.some(c=>c[0]===p.color)||!Number.isFinite(p.angle)||Math.abs(p.angle)>Math.PI*2||!Number.isFinite(p.offset)||p.offset<0||p.offset>1||!bits(p.cut,48)||!seam||typeof seam.aligned!=='boolean'||!bits(seam.bits,32))throw Error('裁片或接缝数据不正确');}
   if(!bits(w.closed,24)||!['button','sleepy','glass'].includes(w.eyes)||!['smile','tiny','wonder'].includes(w.mouth)||!Number.isFinite(w.faceX)||Math.abs(w.faceX)>.18||!Number.isFinite(w.faceY)||Math.abs(w.faceY)>.2||!Number.isFinite(w.earAngle)||Math.abs(w.earAngle)>.5||!Array.isArray(w.decorations)||w.decorations.length>20)throw Error('外观数据不正确');
   for(const d of w.decorations)if(typeof d.id!=='string'||!['bow','patch','heart','flower'].includes(d.type)||!Number.isFinite(d.x)||Math.abs(d.x)>.52||!Number.isFinite(d.y)||Math.abs(d.y)>.62||!Number.isFinite(d.scale)||d.scale<.6||d.scale>1.4||!Number.isFinite(d.rotation)||Math.abs(d.rotation)>Math.PI*4)throw Error('装饰数据不正确');
-  if(w.repair){if(!bits(w.repair.bits,24)||typeof w.repair.found!=='boolean'||typeof w.repair.visible!=='boolean')throw Error('修复数据不正确');if(w.repair.before&&!nested)work(w.repair.before,true);}
+  if(w.stage==='repair'&&!w.repair)throw Error('缺少修复数据');
+  if(w.repair){if(!bits(w.repair.bits,24)||typeof w.repair.found!=='boolean'||typeof w.repair.visible!=='boolean'||(!nested&&!w.repair.before))throw Error('修复数据不正确');if(w.repair.before&&!nested)work(w.repair.before,true);}
  }
  work(s.work);s.collection.forEach(w=>work(w));for(const key of ['history','future']){if(!Array.isArray(s[key])||s[key].length>30)throw Error('撤销记录不正确');s[key].forEach(w=>work(w));}return s;
 }
