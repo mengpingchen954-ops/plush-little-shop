@@ -91,6 +91,7 @@ export class WorkshopScene{
    }
    if(!sewn){const b=partMeshes.body;for(const d of w.decorations){const group=this.decoration(d,w);b.add(group);}}
    if((stage==='fill'||stage==='close')&&progress(w.closed)<1){this.opening(root,w,0,1.3,-.48*fullness,'fill');}
+   if(!sewn&&w.closed.some(Boolean)){const points=[];for(let i=0;i<24;i++)if(w.closed[i]){const y=1.12+i*.014,dy=(y-1.18)/.83,z=-.49*fullness*Math.sqrt(Math.max(.1,1-dy*dy))-.013;points.push(new THREE.Vector3(-.037,y,z),new THREE.Vector3(.037,y+.012,z));}root.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:'#715640'})));}
    if(w.repair&&progress(w.repair.bits)<1){this.opening(root,w,.59,.88,.25,'repair');}
    if(w.repair&&progress(w.repair.bits)>0){const pts=[];for(let i=0;i<24;i++)if(w.repair.bits[i]){const y=.67+i*.018;pts.push(new THREE.Vector3(.60,y,.25),new THREE.Vector3(.56,y+.012,.29));}root.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:w.repair.visible?'#ca8a79':'#8d6753'})));}
   }
